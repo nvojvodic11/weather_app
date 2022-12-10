@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { MatInkBar } from "@angular/material/tabs";
 import { CurrentWeather } from "../interfaces/current-weather";
 import { Weather } from "../interfaces/weather";
 
@@ -20,6 +19,7 @@ export class CurrentWeatherFactory{
             temp: data.main.temp,
             temp_max: data.main.temp_max,
             temp_min: data.main.temp_min,
+            city: data.name,
             weather: this.getWeatherData(data.weather[0])
         };
     }

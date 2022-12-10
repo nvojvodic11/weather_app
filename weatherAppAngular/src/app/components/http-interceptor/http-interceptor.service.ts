@@ -66,6 +66,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     }
 
     getErrorMessage(error: HttpInterceptorServerError, httpInterceptorEnum: string): string{
-        return error.message ? `${error.message} - ${error.city}` : httpInterceptorEnum;
+        return error.message ? error.message : httpInterceptorEnum;
     }
 }

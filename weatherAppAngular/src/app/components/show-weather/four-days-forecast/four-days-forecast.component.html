@@ -1,1 +1,21 @@
-<p>four-days-forecast works!</p>
+<div class="main-container">
+    <div class="wrapper" *ngIf="forecastData">
+        <p class="info-display">{{forecastData.city}}<span></span></p>
+        <!-- <div class="temp-info full-width">
+            <p class="info-display">Min temp: {{currentWeatherData.temp_min}}<span class="celsius">&#8451;</span></p>
+            <p class="info-display">Max temo: {{currentWeatherData.temp_max}}<span class="celsius">&#8451;</span></p>
+            <p class="info-display">Fells like temp: {{currentWeatherData.feels_like}}<span class="celsius">&#8451;</span></p>
+            <p class="info-display">Humidity: {{currentWeatherData.humidity}}%</p>
+            <p class="info-display">Pressure: {{currentWeatherData.pressure}}hPa</p>
+        </div> -->
+        <mat-tab-group class="tabs">
+            <mat-tab *ngFor="let temperatureData of forecastData.temperatureData; let i = index" label="{{dates[i]}}">
+                <div class="temp-info full-width tab-data">
+                    <p class="info-display">Average temp: {{temperatureData[dates[i]].averageTemp}}<span class="celsius">&#8451;</span></p>
+                    <p class="info-display">Min temp: {{temperatureData[dates[i]].maxTemp}}<span class="celsius">&#8451;</span></p>
+                    <p class="info-display">Max temp: {{temperatureData[dates[i]].minTemp}}<span class="celsius">&#8451;</span></p>
+                </div>
+            </mat-tab>
+          </mat-tab-group>
+    </div>
+</div>

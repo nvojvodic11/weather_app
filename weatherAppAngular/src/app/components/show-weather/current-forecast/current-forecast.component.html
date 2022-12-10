@@ -1,5 +1,14 @@
 <div class="main-container">
-    <div class="wrapper">
-
+    <div class="wrapper" *ngIf="currentWeatherData">
+        <p class="info-display">{{currentWeatherData.city}} <span>{{currentDate}}</span></p>
+        <p class="info-display">Temp {{currentWeatherData.temp}}<span class="celsius">&#8451;</span></p>
+        <p class="info-display">Weather: <span class="weather-info">{{currentWeatherData.weather.main}}</span></p>
+        <div class="temp-info full-width">
+            <p class="info-display">Min temp: {{currentWeatherData.temp_min}}<span class="celsius">&#8451;</span></p>
+            <p class="info-display">Max temp: {{currentWeatherData.temp_max}}<span class="celsius">&#8451;</span></p>
+            <p class="info-display">Fells like temp: {{currentWeatherData.feels_like}}<span class="celsius">&#8451;</span></p>
+            <p class="info-display">Humidity: {{currentWeatherData.humidity}}%</p>
+            <p class="info-display">Pressure: {{currentWeatherData.pressure}}hPa</p>
+        </div>
     </div>
 </div>

@@ -9,5 +9,11 @@ export const weatherReducer = createReducer<WeatherState>(
             ...state,
             currentWeather: action.currentWeather
         }
+    }),
+    on(weatherApiActions.getFourDaysForecastSuccess, (state, action): WeatherState => {
+        return{
+            ...state,
+            fourDaysForecast: action.forecast
+        }
     })
 );

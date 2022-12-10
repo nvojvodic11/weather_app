@@ -6,39 +6,80 @@ import { catchError, map, mergeMap, switchMap, tap } from "rxjs";
 import * as weatherPageActions from './actions/show-weather.page-actions';
 import * as weatherApiActions from './actions/show-weather.api-actions';
 import { CurrentWeather } from "../interfaces/current-weather";
+import { MatDialog } from "@angular/material/dialog";
+import { ContentDialogComponent } from "../../dialogs/content-dialog/content-dialog.component";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ShowWeatherEffect {
 
+    ERROR = 'Error';
+
     constructor(
         private actions$: Actions,
         private store: Store,
+        private dialog: MatDialog,
         private weatherService: ShowWeatherService){}
 
-    getAllHeroesEffect$ = createEffect(
+    getCurrentWeatherEffect$ = createEffect(
         () => this.actions$.pipe(
             ofType(weatherPageActions.getCurrentWeather),
             switchMap((action) => {
                 return this.weatherService.getCurrentForeacast(action.lat, action.long).pipe(
                     map((result: CurrentWeather) => {
-                        result.temp
+                        result
                             ? this.store.dispatch(weatherApiActions.getCurrentWeatherSuccess({currentWeather: result}))
                             : ''
                     })
-                )
-
-                // return this.heroesService.getAllHeroes()
-                // .pipe(
-                //     map((result) => {
-                //         // this.dialogService.close(DialogTypeEnum.PROCESSING);
-                //         result
-                //             ? this.store.dispatch(heroesApiAction.getAllHeroesSuccessfull({heroes: result}))
-                //             : this.store.dispatch(heroesApiAction.actionFailed())
-                //     })
-                // );
+                );
             })
+        ), {dispatch: false}
+    );
+
+    getFourDaysForecastEffect$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(weatherPageActions.getFourDaysForecast),
+            switchMap((action) => {
+                return this.weatherService.getFourDaysForecast(action.lat, action.long).pipe(
+                    map((result: any) => {
+                        result
+                            ? this.store.dispatch(weatherApiActions.getFourDaysForecastSuccess({forecast: result}))
+                            : ''
+                    })
+                );
+            })
+        ), {dispatch: false}
+    );
+    
+    getLocationEffect$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(weatherPageActions.getLocation),
+            map((action) => {
+                this.weatherService.getLocation().then((value: any) => {
+                    value.coords
+                    ? this.store.dispatch(weatherApiActions.getLocationSuccess({lat: value.coords.latitude, long: value.coords.longitude, actionType: action.actionType}))
+                    : this.store.dispatch(weatherApiActions.actionFailed({error: value.message}));
+                });
+            })
+        ), {dispatch: false}
+    );
+
+    getLocationSuccessEffect$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(weatherApiActions.getLocationSuccess),
+            map((action) => 
+                action.actionType === 'currentWeather'
+                ? weatherPageActions.getCurrentWeather({lat: action.lat, long: action.long})
+                : weatherPageActions.getFourDaysForecast({lat: action.lat, long: action.long})
+            ))
+                
+    );
+
+    actionFailedEffect$ = createEffect(
+        () => this.actions$.pipe(
+            ofType(weatherApiActions.actionFailed),
+            map((action) => this.dialog.open(ContentDialogComponent, this.weatherService.getDialogRefData(this.ERROR, action.error)))
         ), {dispatch: false}
     );
 }
