@@ -1,46 +1,144 @@
-.main-container{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to left top, #FEF5E2, #D1E8F8);
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .main-container{
+        width: 100%;
+        height: calc(100% - 64px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to left top, #FEF5E2, #D1E8F8);
+    }
+    
+    .full-width{
+        width: 100%;
+    }
+    
+    .full-height{
+        height: 100%;
+    }
+    
+    .wrapper{
+        width: 70%;
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .temp-info{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    
+    .info-display{
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .celsius{
+        font-weight: normal;
+        font-size: 14px;
+        vertical-align: text-top;
+    }
+    
+    .weather-info{
+        font-weight: normal;
+    }
+    
+    .button-wrapper{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    
+    .button-wrapper button{
+        margin-left: 10px;
+    }
+    
+    .toolbar{
+        background: linear-gradient(to left bottom, #FEF5E2, #D1E8F8);
+    }
 }
 
-.full-width{
-    width: 100%;
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .main-container{
+        width: 100%;
+        height: calc(100% - 64px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to left top, #FEF5E2, #D1E8F8);
+    }
+    
+    .full-width{
+        width: 100%;
+    }
+    
+    .full-height{
+        height: 100%;
+    }
+    
+    .wrapper{
+        width: 70%;
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .temp-info{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    
+    .info-display{
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .celsius{
+        font-weight: normal;
+        font-size: 14px;
+        vertical-align: text-top;
+    }
+    
+    .weather-info{
+        font-weight: normal;
+    }
+    
+    .button-wrapper{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    
+    .button-wrapper button{
+        margin-left: 10px;
+    }
+    
+    .toolbar{
+        background: linear-gradient(to left bottom, #FEF5E2, #D1E8F8);
+    }
 }
 
-.full-height{
-    height: 100%;
-}
-
-.wrapper{
-    width: 70%;
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.temp-info{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.info-display{
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.celsius{
-    font-weight: normal;
-    font-size: 14px;
-    vertical-align: text-top;
-}
-
-.weather-info{
-    font-weight: normal;
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .temp-info{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
 }

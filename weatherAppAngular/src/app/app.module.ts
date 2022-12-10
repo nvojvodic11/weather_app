@@ -21,6 +21,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ShowWeatherEffect } from './components/show-weather/state/show-weather.effect';
 import { weatherReducer } from './components/show-weather/state/show-weather.reducer';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { weatherReducer } from './components/show-weather/state/show-weather.red
     MatDialogModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatToolbarModule,
     StoreModule.forRoot({}), 
     StoreModule.forFeature('weather', weatherReducer),
     EffectsModule.forRoot([ShowWeatherEffect])

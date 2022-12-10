@@ -1,1 +1,7 @@
+<mat-toolbar class="toolbar">
+    <span>Weather App</span>
+    <div class="button-wrapper">
+        <button *ngFor="let route of toolbarRoutes; let i = index" mat-raised-button (click)="navigateTo(route.path)">{{route.name}}</button>
+    </div>
+</mat-toolbar>
 <router-outlet></router-outlet>
