@@ -2,12 +2,14 @@ import { Injectable } from "@angular/core";
 import { ShowWeatherService } from "../service/show-weather-service";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from "@ngrx/store";
-import { catchError, map, mergeMap, switchMap, tap } from "rxjs";
+import { map, switchMap } from "rxjs";
 import * as weatherPageActions from './actions/show-weather.page-actions';
 import * as weatherApiActions from './actions/show-weather.api-actions';
 import { CurrentWeather } from "../interfaces/current-weather";
 import { MatDialog } from "@angular/material/dialog";
 import { ContentDialogComponent } from "../../dialogs/content-dialog/content-dialog.component";
+import { DialogTypeEnum } from "../../dialogs/dialog-type.enum";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +20,7 @@ export class ShowWeatherEffect {
 
     constructor(
         private actions$: Actions,
+        private router: Router,
         private store: Store,
         private dialog: MatDialog,
         private weatherService: ShowWeatherService){}
@@ -68,10 +71,12 @@ export class ShowWeatherEffect {
     getLocationSuccessEffect$ = createEffect(
         () => this.actions$.pipe(
             ofType(weatherApiActions.getLocationSuccess),
-            map((action) => 
-                action.actionType === 'currentWeather'
-                ? weatherPageActions.getCurrentWeather({lat: action.lat, long: action.long})
-                : weatherPageActions.getFourDaysForecast({lat: action.lat, long: action.long})
+            map((action) => {
+                    this.dialog.getDialogById(DialogTypeEnum.PROCESSING)?.close();
+                    return action.actionType === 'currentWeather'
+                    ? weatherPageActions.getCurrentWeather({lat: action.lat, long: action.long})
+                    : weatherPageActions.getFourDaysForecast({lat: action.lat, long: action.long})
+                }
             ))
                 
     );
@@ -79,7 +84,12 @@ export class ShowWeatherEffect {
     actionFailedEffect$ = createEffect(
         () => this.actions$.pipe(
             ofType(weatherApiActions.actionFailed),
-            map((action) => this.dialog.open(ContentDialogComponent, this.weatherService.getDialogRefData(this.ERROR, action.error)))
+            map((action) => {
+                this.dialog.getDialogById(DialogTypeEnum.PROCESSING)?.close();
+                this.dialog.open(ContentDialogComponent, this.weatherService.getDialogRefData(this.ERROR, action.error)).afterClosed().subscribe(
+                    value => this.router.navigateByUrl('/404')
+                );
+            })
         ), {dispatch: false}
     );
 }

@@ -70,6 +70,12 @@ export class ShowWeatherService{
         });
     }
 
+    /**
+     * Get data for content dialog
+     * @param title - dialog title
+     * @param message - dialog message
+     * @returns 
+     */
     getDialogRefData(title: string, message: string): DialogRefData{
         return {
             data:{

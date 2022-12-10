@@ -1,6 +1,4 @@
 import { Injectable } from "@angular/core";
-import { CurrentWeather } from "../interfaces/current-weather";
-import { Weather } from "../interfaces/weather";
 import * as moment from 'moment';
 import { ArrayUtilsService } from "../../utils/array-utils.service";
 import { FourDaysForecast, TemperatureData } from "../interfaces/four-days-forecast";

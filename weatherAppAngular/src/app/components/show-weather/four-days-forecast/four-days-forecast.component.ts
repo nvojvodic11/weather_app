@@ -6,6 +6,8 @@ import * as weatherPageActions from '../state/actions/show-weather.page-actions'
 import * as  weatherSelect from '../state/actions/show-weather.select';
 import { FourDaysForecast, TemperatureData } from '../interfaces/four-days-forecast';
 import { filter, takeUntil } from 'rxjs';
+import { DialogTypeEnum } from '../../dialogs/dialog-type.enum';
+import { ProcessingDialogComponent } from '../../dialogs/processing-dialog/processing-dialog.component';
 
 @Component({
   selector: 'app-four-days-forecast',
@@ -21,6 +23,7 @@ export class FourDaysForecastComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dialog.open(ProcessingDialogComponent, {id: DialogTypeEnum.PROCESSING});
     this.store.dispatch(weatherPageActions.getLocation({actionType: 'forecast'}));
     this.store.select(weatherSelect.getFourDaysForecast).pipe(
       filter(value => value.temperatureData.length > 0),

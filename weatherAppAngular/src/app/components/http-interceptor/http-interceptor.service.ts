@@ -7,6 +7,7 @@ import { DialogTypeEnum } from "../dialogs/dialog-type.enum";
 import { MatDialog } from "@angular/material/dialog";
 import { ContentDialogComponent } from "../dialogs/content-dialog/content-dialog.component";
 import { HttpInterceptorServerError } from "./http-interceptor-server-error";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ import { HttpInterceptorServerError } from "./http-interceptor-server-error";
 export class HttpErrorInterceptor implements HttpInterceptor {
     ERROR = 'Error';
 
-    constructor(private dialog: MatDialog){}
+    constructor(private dialog: MatDialog, private router: Router){}
 
     intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(httpRequest).pipe(
@@ -29,7 +30,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 };
 
                 this.dialog.getDialogById(DialogTypeEnum.PROCESSING)?.close();
-                this.dialog.open(ContentDialogComponent, dialogRef)
+                this.dialog.open(ContentDialogComponent, dialogRef).afterClosed().subscribe(
+                    value => this.router.navigateByUrl('/404')
+                );
 
                 return throwError(() => error);
             })

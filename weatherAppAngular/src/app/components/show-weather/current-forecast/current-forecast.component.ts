@@ -7,6 +7,8 @@ import { CurrentWeather } from '../interfaces/current-weather';
 import * as weatherPageActions from '../state/actions/show-weather.page-actions';
 import * as  weatherSelect from '../state/actions/show-weather.select';
 import * as moment from "moment";
+import { ProcessingDialogComponent } from '../../dialogs/processing-dialog/processing-dialog.component';
+import { DialogTypeEnum } from '../../dialogs/dialog-type.enum';
 
 @Component({
   selector: 'app-current-forecast',
@@ -22,6 +24,7 @@ export class CurrentForecastComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dialog.open(ProcessingDialogComponent, {id: DialogTypeEnum.PROCESSING});
     this.store.dispatch(weatherPageActions.getLocation({actionType: 'currentWeather'}));
     this.store.select(weatherSelect.getCurrentWeather).pipe(
       filter(value => value.weather.id !== 0),
