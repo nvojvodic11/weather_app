@@ -13,7 +13,7 @@ import { FourDaysForecast } from "../interfaces/four-days-forecast";
 })
 export class ShowWeatherService{
     private readonly GET_CURRENT_FORECAST = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={APIKey}&units=metric';
-    private readonly GET_FOUR_DAYS_FORECAST = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={APIKey}&cnt=32&units=metric';
+    private readonly GET_FOUR_DAYS_FORECAST = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={APIKey}&units=metric';
 
     constructor(
         private httpClient: HttpClient,
